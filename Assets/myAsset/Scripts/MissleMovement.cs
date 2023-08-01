@@ -13,6 +13,8 @@ public class MissleMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Time.deltaTime * moveSpeed * Vector3.up);
+        
+        //transform.Translate(Time.deltaTime * moveSpeed * Vector3.up, Space.Self);
+        transform.Translate(Time.deltaTime * moveSpeed * transform.up, Space.World);
     }
 }
