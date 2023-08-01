@@ -5,10 +5,13 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     public GameObject player;
+    public float lerpTime;
+    Vector3 velocity; 
     // Start is called before the first frame update
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        velocity = player.transform.forward * player.GetComponent<P38Movement>().moveSpeed;
     }
 
     // Update is called once per frame
@@ -21,7 +24,9 @@ public class FollowCamera : MonoBehaviour
         //}
         if (player != null)
         {
-            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -60f);
+            //transform.position = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 2.0f);
+            transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref velocity, lerpTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, player.transform.rotation, Time.deltaTime * 2.0f);
         }
     }
 }
