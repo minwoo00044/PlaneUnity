@@ -11,7 +11,7 @@ public class FollowCamera : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        velocity = player.transform.forward * player.GetComponent<P38Movement>().moveSpeed;
+
     }
 
     // Update is called once per frame
@@ -28,5 +28,10 @@ public class FollowCamera : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref velocity, lerpTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, player.transform.rotation, Time.deltaTime * 2.0f);
         }
+        //if (player != null)
+        //{
+        //    //transform.position = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 2.0f);
+        //    transform.position = player.transform.position;
+        //}
     }
 }
