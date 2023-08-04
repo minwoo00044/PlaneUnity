@@ -13,17 +13,22 @@ public class Slime : Enemy
     void Start()
     {
         animator = GetComponent<Animator>();
+        animator.SetBool("isRun", true);
         SetRandomDirection();
         StartCoroutine(ChangeDirectionCoroutine());
     }
 
     void Update()
     {
-        // 몬스터를 이동 방향으로 이동시킴
+        // Move the enemy in the current direction
         transform.Translate(currentDirection * moveSpeed * Time.deltaTime);
 
-        // 몬스터가 이동 방향과 회전 방향을 모두 고려하여 회전
+        // Calculate the rotation step
+        float step = rotationSpeed * Time.deltaTime;
 
+        // Calculate the new rotation towards the current direction
+        Quaternion targetRotation = Quaternion.LookRotation(currentDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, step);
     }
 
     IEnumerator ChangeDirectionCoroutine()
@@ -37,11 +42,7 @@ public class Slime : Enemy
 
     void SetRandomDirection()
     {
-        // 랜덤한 방향 벡터 생성
+        // Create a random direction vector
         currentDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
-
-
-        transform.rotation = Quaternion.LookRotation(currentDirection);
-
     }
 }
